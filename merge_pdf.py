@@ -18,6 +18,7 @@ class Devolutiva:
   def read_database(self,df1):
     k = 0
     temp = 2
+    nome_escola = ''
     for i in df1.itertuples():
       if not i.escola_v2 == 1:
         if k == 0:
@@ -25,15 +26,17 @@ class Devolutiva:
           self.merger.append(self.path + self.capa)
           self.merger.append(self.path + self.txtAbertura)
           self.merger.append(self.path + self.escola + str(i.escola_v2) + '.pdf') 
+          nome_escola = i.escola
         
         if i.escola_v2 == temp:
           self.merger.append(self.path + self.escola_turma + str(i.escola_turma_v2) + '.pdf')
           print('escola_turma_v2: ' + str(i.escola_turma_v2))
           print('escola_v2: ' + str(i.escola_v2))
         else:
-          if not os.path.exists('C:/Users/kleytonramos/Documents/Join pdf - IAS Devolutiva CE/Output_escola/IAS Relatorio Escola ' + str(temp) + '.pdf'):
-            self.merger.write('C:/Users/kleytonramos/Documents/Join pdf - IAS Devolutiva CE/Output_escola/IAS Relatorio Escola ' + str(temp) + '.pdf')
+          if not os.path.exists('C:/Users/kleytonramos/Documents/Join pdf - IAS Devolutiva CE/Output_escola/IAS Relatorio Escola ' + nome_escola +' '+ str(temp) + '.pdf'):
+            self.merger.write('C:/Users/kleytonramos/Documents/Join pdf - IAS Devolutiva CE/Output_escola/IAS Relatorio Escola ' + nome_escola +' '+ str(temp) + '.pdf')
             temp = i.escola_v2
+            nome_escola = i.escola
             self.merger.close()
             self.merger = PdfFileMerger()
             self.merger.append(self.path + self.capa)
